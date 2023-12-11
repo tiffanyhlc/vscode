@@ -10,6 +10,18 @@ const path = require('path');
 
 let window = null;
 
+function createMainWindow() {
+	return new BrowserWindow({
+		width: 800,
+		height: 600,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false,
+			enableWebSQL: false
+		}
+	});
+}
+
 ipcMain.handle('pickdir', async () => {
 	const result = await dialog.showOpenDialog(window, {
 		title: 'Choose Folder',
@@ -24,15 +36,7 @@ ipcMain.handle('pickdir', async () => {
 });
 
 app.once('ready', () => {
-	window = new BrowserWindow({
-		width: 800,
-		height: 600,
-		webPreferences: {
-			nodeIntegration: true,
-			contextIsolation: false,
-			enableWebSQL: false
-		}
-	});
+	window = createMainWindow();
 	window.setMenuBarVisibility(false);
 	window.loadURL(url.format({ pathname: path.join(__dirname, 'index.html'), protocol: 'file:', slashes: true }));
 	// window.webContents.openDevTools();
