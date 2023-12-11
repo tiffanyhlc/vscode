@@ -38,32 +38,45 @@ export class CountBadge {
 		this.countFormat = this.options.countFormat || '{0}';
 		this.titleFormat = this.options.titleFormat || '';
 		this.setCount(this.options.count || 0);
+		this.styles = styles;
 	}
 
 	setCount(count: number) {
 		this.count = count;
-		this.render();
+		this.renderBadge();
 	}
 
 	setCountFormat(countFormat: string) {
 		this.countFormat = countFormat;
-		this.render();
+		this.renderBadge();
 	}
 
 	setTitleFormat(titleFormat: string) {
 		this.titleFormat = titleFormat;
-		this.render();
+		this.renderBadge();
 	}
 
-	private render() {
-		this.element.textContent = format(this.countFormat, this.count);
-		this.element.title = format(this.titleFormat, this.count);
+	private renderBadge() {
+		this.renderCount();
+		this.renderTitle();
+		this.renderStyles();
+	}
 
+	private renderCount() {
+		this.element.textContent = format(this.countFormat, this.count);
+	}
+
+	private renderTitle() {
+		this.element.title = format(this.titleFormat, this.count);
+	}
+
+
+	private renderStyles() {
 		this.element.style.backgroundColor = this.styles.badgeBackground ?? '';
 		this.element.style.color = this.styles.badgeForeground ?? '';
-
 		if (this.styles.badgeBorder) {
 			this.element.style.border = `1px solid ${this.styles.badgeBorder}`;
 		}
 	}
+
 }
