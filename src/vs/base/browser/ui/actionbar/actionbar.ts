@@ -397,22 +397,17 @@ export class ActionBar extends Disposable implements IActionRunner {
 		this.refreshRole();
 	}
 
-	getWidth(index: number): number {
+	getHeightorWidth(index: number, lengthType: string): number | null {
 		if (index >= 0 && index < this.actionsList.children.length) {
 			const item = this.actionsList.children.item(index);
 			if (item) {
-				return item.clientWidth;
-			}
-		}
-
-		return 0;
-	}
-
-	getHeight(index: number): number {
-		if (index >= 0 && index < this.actionsList.children.length) {
-			const item = this.actionsList.children.item(index);
-			if (item) {
-				return item.clientHeight;
+				if (lengthType = 'height') {
+					return item.clientHeight;
+				} if (lengthType = 'width') {
+					return item.clientWidth;
+				}
+				else
+					return null;
 			}
 		}
 
